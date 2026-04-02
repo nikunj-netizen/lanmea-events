@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LP & GP Events Directory | Lanmea</title>
+  <meta name="description" content="Curated directory of conferences, summits and forums for Limited Partners and General Partners in private markets.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lanmea: {
+              dark: '#241818',
+              burgundy: '#6B0A14',
+              green: '#1D3B29',
+              light: '#F4F7F3',
+              cream: '#faf8f5',
+            }
+          },
+          fontFamily: {
+            display: ['"LT Superior"', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @font-face {
+      font-family: 'LT Superior';
+      src: local('LT Superior Light');
+      font-weight: 300;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'LT Superior';
+      src: local('LT Superior Medium');
+      font-weight: 500;
+      font-style: normal;
+    }
+    body {
+      font-family: 'LT Superior', Georgia, 'Times New Roman', serif;
+      color: #241818;
+    }
+    .filter-btn {
+      transition: all 0.25s ease;
+    }
+    .filter-btn.active {
+      background-color: #6B0A14;
+      color: white;
+      border-color: #6B0A14;
+    }
+    .event-card {
+      transition: all 0.3s ease;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .event-card.hidden-card {
+      display: none;
+    }
+    .event-card:hover {
+      box-shadow: 0 20px 40px -12px rgba(36, 24, 24, 0.12);
+      transform: translateY(-2px);
+    }
+    .tag-pill {
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .audience-badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    a.nav-link {
+      position: relative;
+    }
+    a.nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: #6B0A14;
+      transition: width 0.3s ease;
+    }
+    a.nav-link:hover::after {
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="bg-white antialiased">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-lanmea-dark/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16">
+      <a href="https://www.lanmea.com" class="text-xl font-medium tracking-tight text-lanmea-dark">
+        Lanmea
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-sm tracking-wide">
+        <a href="https://www.lanmea.com/" class="nav-link text-lanmea-dark/70 hover:text-lanmea-dark">Home</a>
+        <a href="https://www.lanmea.com/forge" class="nav-link text-lanmea-dark/70 hover:text-lanmea-dark">Forge</a>
+        <a href="https://www.lanmea.com/capital" class="nav-link text-lanmea-dark/70 hover:text-lanmea-dark">Capital</a>
+        <a href="https://www.lanmea.com/about" class="nav-link text-lanmea-dark/70 hover:text-lanmea-dark">About</a>
+        <a href="https://www.lanmea.com/contact" class="nav-link text-lanmea-dark/70 hover:text-lanmea-dark">Contact</a>
+        <a href="https://www.lanmea.com/contact" class="ml-2 px-5 py-2 bg-lanmea-dark text-white text-sm rounded-full hover:bg-lanmea-burgundy transition-colors">Let's Talk</a>
+      </nav>
+      <button id="mobileToggle" class="md:hidden text-lanmea-dark" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-lanmea-dark/5 px-6 py-4 space-y-3 text-sm">
+      <a href="https://www.lanmea.com/" class="block text-lanmea-dark/70">Home</a>
+      <a href="https://www.lanmea.com/forge" class="block text-lanmea-dark/70">Forge</a>
+      <a href="https://www.lanmea.com/capital" class="block text-lanmea-dark/70">Capital</a>
+      <a href="https://www.lanmea.com/about" class="block text-lanmea-dark/70">About</a>
+      <a href="https://www.lanmea.com/contact" class="block text-lanmea-dark/70">Contact</a>
+      <a href="https://www.lanmea.com/contact" class="inline-block px-5 py-2 bg-lanmea-dark text-white text-sm rounded-full">Let's Talk</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative pt-16 overflow-hidden">
+    <div class="bg-gradient-to-br from-[#1a0508] via-lanmea-burgundy to-[#1a0508] text-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32 relative">
+        <div class="absolute top-10 right-10 w-64 h-64 rounded-full border border-white/5 opacity-40"></div>
+        <div class="absolute bottom-10 right-32 w-40 h-40 rounded-full border border-dashed border-white/10 opacity-30"></div>
+        <p class="text-xs tracking-[0.2em] uppercase text-white/50 mb-6">Lanmea Capital</p>
+        <h1 class="text-4xl lg:text-6xl font-extralight leading-tight max-w-3xl mb-6">
+          LP &amp; GP <br>
+          <span class="font-medium">Events Directory</span>
+        </h1>
+        <p class="text-lg lg:text-xl font-light text-white/70 max-w-2xl leading-relaxed">
+          Curated conferences, summits and forums for capital allocators and fund managers across private markets.
+        </p>
+        <div class="mt-8 flex items-center gap-3 text-sm text-white/40">
+          <span class="inline-block w-8 h-px bg-white/20"></span>
+          <span>10 events</span>
+          <span class="text-white/20">&middot;</span>
+          <span>2026</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="border-b border-lanmea-dark/5 bg-lanmea-light">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6">
+      <div class="mb-4">
+        <p class="text-xs tracking-[0.15em] uppercase text-lanmea-dark/40 mb-3">Asset Class</p>
+        <div class="flex flex-wrap gap-2">
+          <button class="filter-btn active px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="asset" data-value="all">All</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="asset" data-value="pe">PE</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="asset" data-value="vc">VC</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="asset" data-value="credit">Credit</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="asset" data-value="infra">Infrastructure</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="asset" data-value="hedge">Hedge Funds</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="asset" data-value="impact">Impact</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="asset" data-value="realestate">Real Estate</button>
+        </div>
+      </div>
+      <div class="mb-4">
+        <p class="text-xs tracking-[0.15em] uppercase text-lanmea-dark/40 mb-3">Region</p>
+        <div class="flex flex-wrap gap-2">
+          <button class="filter-btn active px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="region" data-value="all">All</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="region" data-value="global">Global</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="region" data-value="north-america">North America</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="region" data-value="europe">Europe</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="region" data-value="asia-pacific">Asia-Pacific</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="region" data-value="south-asia">South Asia</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="region" data-value="emerging">Emerging Markets</button>
+        </div>
+      </div>
+      <div>
+        <p class="text-xs tracking-[0.15em] uppercase text-lanmea-dark/40 mb-3">Audience</p>
+        <div class="flex flex-wrap gap-2">
+          <button class="filter-btn active px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="audience" data-value="all">All</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="audience" data-value="mixed">Mixed LP-GP</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="audience" data-value="lp">LP-focused</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full border border-lanmea-dark/15 text-sm text-lanmea-dark/70" data-filter="audience" data-value="gp">GP-focused</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENTS GRID -->
+  <section class="bg-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+      <div id="eventsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      <p id="noResults" class="hidden text-center text-lanmea-dark/40 py-16 text-lg">No events match your filters.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-lanmea-light">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 text-center">
+      <h2 class="text-2xl lg:text-3xl font-extralight mb-3">Know an event we're missing?</h2>
+      <p class="text-lanmea-dark/50 mb-6 text-sm">Help us keep this directory complete.</p>
+      <a href="mailto:info@lanmea.com?subject=Event%20Suggestion%20-%20LP/GP%20Directory" class="inline-block px-8 py-3 bg-lanmea-dark text-white text-sm rounded-full hover:bg-lanmea-burgundy transition-colors">
+        Submit an Event
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-lanmea-dark text-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+          <p class="text-lg font-medium tracking-tight mb-4">Lanmea</p>
+          <p class="text-sm text-white/40 leading-relaxed">&copy; 2026 Lanmea. All rights reserved.</p>
+        </div>
+        <div>
+          <p class="text-xs tracking-[0.15em] uppercase text-white/30 mb-4">Navigate</p>
+          <div class="space-y-2 text-sm">
+            <a href="https://www.lanmea.com/" class="block text-white/60 hover:text-white transition-colors">Home</a>
+            <a href="https://www.lanmea.com/forge" class="block text-white/60 hover:text-white transition-colors">Lanmea Forge</a>
+            <a href="https://www.lanmea.com/capital" class="block text-white/60 hover:text-white transition-colors">Lanmea Capital</a>
+            <a href="https://www.lanmea.com/about" class="block text-white/60 hover:text-white transition-colors">About Us</a>
+            <a href="https://www.lanmea.com/contact" class="block text-white/60 hover:text-white transition-colors">Contact</a>
+          </div>
+        </div>
+        <div class="lg:col-span-2">
+          <p class="text-xs tracking-[0.15em] uppercase text-white/30 mb-4">Global Presence</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/40">
+            <div>
+              <p class="text-white/60 font-medium mb-1">Singapore</p>
+              <p>68 Circular Road, #02-01, Singapore 049422</p>
+            </div>
+            <div>
+              <p class="text-white/60 font-medium mb-1">Dubai</p>
+              <p>Unit No: 3O-01-5357, Jewellery &amp; Gemplex 3</p>
+            </div>
+            <div>
+              <p class="text-white/60 font-medium mb-1">Bangalore</p>
+              <p>80 Feet Main Road, Koramangala, 1A Block, 560034</p>
+            </div>
+            <div>
+              <p class="text-white/60 font-medium mb-1">Manila</p>
+              <p>5/F, Phinma Plaza, Rockwell Centre, Makati, 1200</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-12 pt-6 border-t border-white/10 flex flex-wrap gap-6 text-xs text-white/30">
+        <a href="https://www.lanmea.com/privacy" class="hover:text-white/60 transition-colors">Privacy Policy</a>
+        <a href="https://www.lanmea.com/cookies" class="hover:text-white/60 transition-colors">Cookie Notice</a>
+        <a href="https://www.lanmea.com/disclaimer" class="hover:text-white/60 transition-colors">Disclaimer</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const events = [
+      {
+        name: "Uncorrelated Miami 2026",
+        dates: "Jan 26 \u2013 28, 2026",
+        location: "Miami Beach, FL, USA",
+        organizer: "Uncorrelated Alts",
+        url: "https://www.uncorrelatedalts.com/miami26-home",
+        description: "An intimate, curated alternatives conference for institutional investors, family offices, and fund managers. Focuses on niche, capacity-constrained strategies across alternatives.",
+        assetClass: ["pe", "credit", "hedge", "vc", "realestate"],
+        region: "north-america",
+        audience: "mixed",
+        audienceLabel: "Mixed LP-GP",
+        attendance: "600\u2013800",
+        cost: "Paid",
+        format: "In-person"
+      },
+      {
+        name: "IPEM Wealth 2026",
+        dates: "Feb 3 \u2013 5, 2026",
+        location: "Cannes, France",
+        organizer: "IPEM SAS",
+        url: "https://www.ipem-market.com/ipem-wealth-2026/",
+        description: "The leading global private markets networking event, centered on structured business meetings. Focuses on the convergence of private wealth and private markets.",
+        assetClass: ["pe", "vc", "credit", "realestate", "infra"],
+        region: "europe",
+        audience: "mixed",
+        audienceLabel: "Mixed LP-GP",
+        attendance: "3,800+",
+        cost: "Paid",
+        format: "In-person"
+      },
+      {
+        name: "iConnections Global Alts 2026",
+        dates: "Feb 23 \u2013 26, 2026",
+        location: "Miami Beach, FL, USA",
+        organizer: "iConnections",
+        url: "https://iconnections.io/global-alts-miami-2026-event-detail/",
+        description: "The world's largest capital introduction event for alternative investments. Features structured one-on-one meetings between allocators and fund managers across every alt asset class.",
+        assetClass: ["pe", "vc", "credit", "hedge", "realestate", "infra"],
+        region: "global",
+        audience: "mixed",
+        audienceLabel: "Mixed LP-GP",
+        attendance: "5,000+",
+        cost: "Paid",
+        format: "In-person"
+      },
+      {
+        name: "IVCA Conclave 2026",
+        dates: "Mar 10 \u2013 11, 2026",
+        location: "Mumbai, India",
+        organizer: "Indian Venture and Alternate Capital Association",
+        url: "https://www.ivca.in/",
+        description: "India's most influential forum for private and alternate capital in its 15th edition. Brings together global investors, policymakers, LPs, family offices, and founders.",
+        assetClass: ["pe", "vc", "credit", "realestate", "infra"],
+        region: "south-asia",
+        audience: "mixed",
+        audienceLabel: "Mixed LP-GP",
+        attendance: "1,000\u20131,500",
+        cost: "Paid",
+        format: "In-person"
+      },
+      {
+        name: "GPC Conference 2026",
+        dates: "May 11 \u2013 13, 2026",
+        location: "New York, NY, USA",
+        organizer: "Global Private Capital Association & IFC",
+        url: "https://www.gpcconference.org/",
+        description: "An invitation-caliber gathering of lead investors, deal makers, and development finance players focused on private capital in emerging markets across Africa, Asia, Latin America, and the Middle East.",
+        assetClass: ["pe", "vc", "impact", "infra", "credit"],
+        region: "emerging",
+        audience: "mixed",
+        audienceLabel: "Mixed LP-GP",
+        attendance: "500\u2013700",
+        cost: "Invite-only",
+        format: "In-person"
+      },
+      {
+        name: "SuperReturn International 2026",
+        dates: "Jun 8 \u2013 12, 2026",
+        location: "Berlin, Germany",
+        organizer: "Informa Connect",
+        url: "https://informaconnect.com/superreturn-international/",
+        description: "The world's largest and most senior private equity gathering. Two days of specialist summits followed by three days of main conference with 2,000+ LPs and 3,000+ GPs.",
+        assetClass: ["pe", "vc", "credit", "infra"],
+        region: "global",
+        audience: "mixed",
+        audienceLabel: "Mixed LP-GP",
+        attendance: "6,000+",
+        cost: "Paid",
+        format: "In-person"
+      },
+      {
+        name: "SuperReturn Asia 2026",
+        dates: "Sep 29 \u2013 Oct 2, 2026",
+        location: "Singapore",
+        organizer: "Informa Connect",
+        url: "https://informaconnect.com/superreturnasia/",
+        description: "Asia's flagship private capital conference and the region's most senior LP-GP gathering, drawing 2,500+ attendees including 1,000+ LPs across PE, credit, infrastructure, and venture.",
+        assetClass: ["pe", "vc", "credit", "infra"],
+        region: "asia-pacific",
+        audience: "mixed",
+        audienceLabel: "Mixed LP-GP",
+        attendance: "2,500+",
+        cost: "Paid",
+        format: "In-person"
+      },
+      {
+        name: "PEI Operating Partners Forum 2026",
+        dates: "Oct 19 \u2013 21, 2026",
+        location: "New York, NY, USA",
+        organizer: "PEI Group",
+        url: "https://www.peievents.com/en/event/operating-partners-forum-new-york/",
+        description: "The largest global event for private equity value creation, bringing together operating partners from top PE firms for interactive working groups, think tanks, and panels.",
+        assetClass: ["pe"],
+        region: "north-america",
+        audience: "gp",
+        audienceLabel: "GP-focused",
+        attendance: "500+",
+        cost: "Paid",
+        format: "In-person"
+      },
+      {
+        name: "ILPA Summit 2026",
+        dates: "Nov 3 \u2013 5, 2026",
+        location: "New York, NY, USA",
+        organizer: "Institutional Limited Partners Association",
+        url: "https://ilpa.org/conference/ilpa-summit/",
+        description: "The flagship annual gathering of ILPA, convening pension funds, endowments, sovereign wealth funds, and family offices for discussions on fund terms, governance, ESG, and portfolio construction.",
+        assetClass: ["pe", "vc", "credit", "infra"],
+        region: "north-america",
+        audience: "lp",
+        audienceLabel: "LP-focused",
+        attendance: "800\u20131,000",
+        cost: "Paid",
+        format: "In-person"
+      },
+      {
+        name: "AVCJ PE & Venture Forum 2026",
+        dates: "Nov 15 \u2013 18, 2026",
+        location: "Hong Kong SAR, China",
+        organizer: "AVCJ / ION Analytics",
+        url: "https://community.ionanalytics.com/avcj-private-equity-forum-hong-kong-2025",
+        description: "Asia's premier private markets gathering in its 37th year. Five thematic conferences spotlighting market opportunities and macroeconomic issues across Asian private equity with 165+ speakers.",
+        assetClass: ["pe", "vc", "credit", "infra"],
+        region: "asia-pacific",
+        audience: "mixed",
+        audienceLabel: "Mixed LP-GP",
+        attendance: "3,800+",
+        cost: "Paid",
+        format: "In-person"
+      }
+    ];
+
+    const grid = document.getElementById('eventsGrid');
+    const noResults = document.getElementById('noResults');
+
+    const assetLabels = {
+      pe: 'PE', vc: 'VC', credit: 'Credit', infra: 'Infrastructure',
+      hedge: 'Hedge Funds', impact: 'Impact', realestate: 'Real Estate'
+    };
+
+    const audienceColors = {
+      mixed: 'bg-lanmea-burgundy/10 text-lanmea-burgundy',
+      lp: 'bg-emerald-50 text-emerald-700',
+      gp: 'bg-amber-50 text-amber-700'
+    };
+
+    function renderCards(filteredEvents) {
+      grid.innerHTML = '';
+      if (filteredEvents.length === 0) {
+        noResults.classList.remove('hidden');
+        return;
+      }
+      noResults.classList.add('hidden');
+
+      filteredEvents.forEach(ev => {
+        const card = document.createElement('div');
+        card.className = 'event-card bg-white rounded-2xl border border-lanmea-dark/8 border-l-2 border-l-lanmea-burgundy overflow-hidden';
+        card.innerHTML = `
+          <div class="p-6 flex flex-col h-full">
+            <div class="flex items-start justify-between mb-4">
+              <span class="audience-badge px-2.5 py-1 rounded-full font-medium ${audienceColors[ev.audience]}">${ev.audienceLabel}</span>
+              <span class="text-xs text-lanmea-dark/30 font-medium">${ev.format}</span>
+            </div>
+            <h3 class="text-lg font-medium text-lanmea-dark leading-snug mb-2">${ev.name}</h3>
+            <div class="flex items-center gap-2 text-sm text-lanmea-dark/50 mb-1">
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span>${ev.dates}</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm text-lanmea-dark/50 mb-3">
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <span>${ev.location}</span>
+            </div>
+            <p class="text-sm text-lanmea-dark/50 leading-relaxed mb-4 flex-grow">${ev.description}</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              ${ev.assetClass.map(a => `<span class="tag-pill px-2.5 py-0.5 rounded-full bg-lanmea-light text-lanmea-dark/50 font-medium">${assetLabels[a] || a}</span>`).join('')}
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-lanmea-dark/5 mt-auto">
+              <div class="text-xs text-lanmea-dark/30">
+                <span>${ev.attendance}</span>
+                <span class="mx-1.5">&middot;</span>
+                <span>${ev.cost}</span>
+                <span class="mx-1.5">&middot;</span>
+                <span>${ev.organizer}</span>
+              </div>
+            </div>
+            <a href="${ev.url}" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-lanmea-burgundy hover:text-lanmea-dark transition-colors">
+              Visit Event
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    const activeFilters = { asset: 'all', region: 'all', audience: 'all' };
+
+    function applyFilters() {
+      const filtered = events.filter(ev => {
+        const assetMatch = activeFilters.asset === 'all' || ev.assetClass.includes(activeFilters.asset);
+        const regionMatch = activeFilters.region === 'all' || ev.region === activeFilters.region;
+        const audienceMatch = activeFilters.audience === 'all' || ev.audience === activeFilters.audience;
+        return assetMatch && regionMatch && audienceMatch;
+      });
+      renderCards(filtered);
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filterType = btn.dataset.filter;
+        const value = btn.dataset.value;
+        document.querySelectorAll(`.filter-btn[data-filter="${filterType}"]`).forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilters[filterType] = value;
+        applyFilters();
+      });
+    });
+
+    renderCards(events);
+  </script>
+
+</body>
+</html>
