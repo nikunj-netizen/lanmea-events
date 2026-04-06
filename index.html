@@ -17,6 +17,16 @@
     .nav-link:hover { color:var(--dark); }
     .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1px; background:var(--burgundy); transition:width 0.3s; }
     .nav-link:hover::after { width:100%; }
+    .nav-dropdown{position:relative}
+    .nav-dropdown-trigger{display:flex;align-items:center;gap:4px;cursor:pointer}
+    .nav-dropdown-trigger svg.chevron{width:12px;height:12px;transition:transform 0.2s}
+    .nav-dropdown:hover .nav-dropdown-trigger svg.chevron{transform:rotate(180deg)}
+    .nav-dropdown:hover .nav-dropdown-trigger{color:#6B0A14}
+    .nav-dropdown-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:12px;background:#fff;border-radius:12px;box-shadow:0 12px 40px -8px rgba(36,24,24,0.12);border:1px solid rgba(36,24,24,0.06);padding:20px 24px;display:flex;gap:32px;opacity:0;visibility:hidden;transition:all 0.2s;min-width:280px;z-index:60}
+    .nav-dropdown:hover .nav-dropdown-menu{opacity:1;visibility:visible;margin-top:8px}
+    .nav-dropdown-col h4{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B0A14;margin-bottom:10px}
+    .nav-dropdown-col a{display:block;font-size:13px;color:rgba(36,24,24,0.55);text-decoration:none;padding:5px 0;transition:color 0.2s;white-space:nowrap}
+    .nav-dropdown-col a:hover{color:#241818}
     .filter-section { background:#fff; border:1px solid rgba(36,24,24,0.07); border-radius:12px; padding:20px; margin-bottom:16px; }
     .filter-title { font-size:14px; font-weight:600; color:var(--dark); margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; }
     .filter-title svg { width:16px; height:16px; color:rgba(36,24,24,0.3); }
@@ -84,6 +94,7 @@
         <a href="https://www.lanmea.com/" class="nav-link">Home</a>
         <a href="https://www.lanmea.com/forge" class="nav-link">Forge</a>
         <a href="https://www.lanmea.com/capital" class="nav-link">Capital</a>
+        <div class="nav-dropdown"><span class="nav-dropdown-trigger nav-link" style="color:#6B0A14;">Resources <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span><div class="nav-dropdown-menu"><div class="nav-dropdown-col"><h4>Tools</h4><a href="./resources.html">All Tools</a><a href="./index.html">Events Directory</a></div><div class="nav-dropdown-col"><h4>Content</h4><a href="./glossary.html">Glossary</a></div></div></div>
         <a href="https://www.lanmea.com/about" class="nav-link">About</a>
         <a href="https://www.lanmea.com/contact" class="nav-link">Contact</a>
       </nav>
@@ -92,7 +103,7 @@
         <button class="md:hidden" style="color:var(--dark);" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
       </div>
     </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-white px-5 py-4 space-y-3" style="border-top:1px solid rgba(36,24,24,0.05);"><a href="https://www.lanmea.com/" class="block nav-link">Home</a><a href="https://www.lanmea.com/forge" class="block nav-link">Forge</a><a href="https://www.lanmea.com/capital" class="block nav-link">Capital</a><a href="https://www.lanmea.com/about" class="block nav-link">About</a><a href="https://www.lanmea.com/contact" class="block nav-link">Contact</a></div>
+    <div id="mobileMenu" class="hidden md:hidden bg-white px-5 py-4 space-y-3" style="border-top:1px solid rgba(36,24,24,0.05);"><a href="https://www.lanmea.com/" class="block nav-link">Home</a><a href="https://www.lanmea.com/forge" class="block nav-link">Forge</a><a href="https://www.lanmea.com/capital" class="block nav-link">Capital</a><p class="text-[11px] font-semibold tracking-[0.08em] uppercase mt-3 mb-1" style="color:#6B0A14;">Resources</p><a href="./resources.html" class="block nav-link pl-3">All Tools</a><a href="./index.html" class="block nav-link pl-3">Events Directory</a><a href="./glossary.html" class="block nav-link pl-3">Glossary</a><a href="https://www.lanmea.com/about" class="block nav-link mt-3">About</a><a href="https://www.lanmea.com/contact" class="block nav-link">Contact</a></div>
   </header>
 
   <section class="relative pt-16 overflow-hidden">
@@ -100,7 +111,7 @@
       <div class="absolute top-8 right-16 w-72 h-72 rounded-full opacity-20" style="border:1px dashed rgba(255,255,255,0.12);"></div>
       <div class="absolute bottom-12 right-40 w-44 h-44 rounded-full opacity-15" style="border:1px solid rgba(255,255,255,0.08);"></div>
       <div class="max-w-[1400px] mx-auto px-5 lg:px-10 py-20 lg:py-28 relative">
-        <p class="text-[11px] tracking-[0.25em] uppercase font-medium mb-6" style="color:rgba(255,240,214,0.5);">Lanmea Capital</p>
+        <nav class="flex items-center gap-2 text-[12px] mb-6" style="color:rgba(255,255,255,0.3);"><a href="./resources.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Resources</a><span>&rsaquo;</span><a href="./resources.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Tools</a><span>&rsaquo;</span><span style="color:rgba(255,240,214,0.5);">Events</span></nav>
         <h1 class="leading-tight max-w-2xl mb-5" style="font-size:clamp(2.25rem,4.5vw,3.25rem);font-weight:300;letter-spacing:-0.02em;">LP &amp; GP<br><span style="font-weight:600;">Events Directory</span></h1>
         <p class="text-[15px] max-w-xl leading-relaxed" style="color:rgba(255,255,255,0.55);font-weight:300;">Curated conferences, summits and forums for capital allocators and fund managers across private markets.</p>
         <div class="mt-8 flex items-center gap-3" style="color:rgba(255,255,255,0.25);font-size:13px;"><span class="inline-block w-10 h-px" style="background:rgba(255,255,255,0.15);"></span><span>10 events</span><span>&middot;</span><span>2026</span></div>
